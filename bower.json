@@ -1,0 +1,25 @@
+{
+  "name": "jquery.extentions",
+  "main": "jquery.extentions*.js",
+  "version": "0.1.0",
+  "authors": [
+    "itau"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "~3.3.0"
+  }
+}
