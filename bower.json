@@ -8,9 +8,6 @@
   "moduleType": [
     "amd"
   ],
-  "keywords": [
-    "jquery"
-  ],
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -20,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "knockout": "~3.3.0"
+    "knockout": "~3.3.0",
+    "jquery": "~2.1.4"
   }
 }
