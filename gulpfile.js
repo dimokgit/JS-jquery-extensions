@@ -7,7 +7,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var dest = "build";
+var dest = "lib";
 
 //// Lint Task
 //gulp.task('lint', function () {
@@ -35,7 +35,7 @@ var dest = "build";
 
 gulp.task('scripts', function () {
   return gulp.src('src/*.js')
-      .pipe(gulp.dest('dist'))
+      .pipe(gulp.dest(dest))
       .pipe(rename(function (path) {
         path.basename += ".min";
       }))

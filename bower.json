@@ -1,6 +1,6 @@
 {
   "name": "jquery.extentions",
-  "main": "dist/*.*",
+  "main": "build/*.*",
   "version": "0.1.0",
   "authors": [
     "itau"
@@ -10,11 +10,9 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "*",
+    "!lib/",
+    "!lib/*"
   ],
   "dependencies": {
     "knockout": "~3.3.0",
