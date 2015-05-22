@@ -7,7 +7,7 @@
     if (arguments.length == 1)
       return !o ? null
         : function () {
-          return arguments.length == 0 ? o : $.D.sure.apply(null, [o].concat(Array.prototype.slice.call(arguments, 0)));
+          return arguments.length == 0 ? o : sure.apply(null, [o].concat(Array.prototype.slice.call(arguments, 0)));
         }
     if ($.isPlainObject(p)) {
       var onError = p.error;
