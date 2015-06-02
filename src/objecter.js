@@ -24,7 +24,11 @@
       }
       else throw new Error(errorMsg);
     }
-    return arguments.length == 2 ? o[name] : o[name] = v;
+    return arguments.length == 2
+      ? $.isFunction(o[name])
+      ? o[name].bind(o)
+      : o[name]
+      : o[name] = v;
   }
   function sure_name(o, p, doThrow) {
     if (!o)

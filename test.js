@@ -25,5 +25,12 @@
     }
   }));
   alert("For Prop7 using:" + sureO({ name: "Prop7", error: "hooray2" }));
-
+  function Context(context) {
+    this.context = context;
+    this.getContext = function () { return this.context; };
+  }
+  var context = new Context("{ad-hoc context}");
+  alert(JSON.stringify({ context: objecter.sure(context)("context") }, null, 2));
+  var sureContext = objecter.sure(new Context("{saved context}"));
+  alert(JSON.stringify({ context: sureContext("context") }, null, 2));
 });
