@@ -1,4 +1,4 @@
-﻿require(["jquery", "./src/objecter.js"], function ($, objecter) {
+﻿require(["jquery","ko", "./src/objecter.js","ko.extensions"], function ($,ko, objecter) {
   var o = { prop: "Prop" };
   alert(objecter.sure(o, "Prop"));
   try {
@@ -33,4 +33,11 @@
   alert(JSON.stringify({ context: objecter.sure(context)("context") }, null, 2));
   var sureContext = objecter.sure(new Context("{saved context}"));
   alert(JSON.stringify({ context: sureContext("context") }, null, 2));
+
+  function VM() {
+    this.callBack = function (element) {
+      alert("elementer: " + $(element).html());
+    }
+  }
+  ko.applyBindings(new VM());
 });

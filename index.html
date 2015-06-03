@@ -5,6 +5,7 @@
   <script src="require-config.js"></script>
   <script src="bower_components/requirejs/require.js" data-main="/test.js"></script>
 <body>
-  <div id="dimok">Dimok</div>
+  <div data-bind="elementer:callBack">Dimok</div>
+  <div data-bind="elementer:{init:callBack}" >init:dimon</div>
 </body>
 </html>
