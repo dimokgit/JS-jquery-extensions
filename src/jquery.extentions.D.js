@@ -717,7 +717,7 @@
         }
       }, oDataErrorToString: function (error) {
         var html = $(eval("error.data[0].response.body")).filter(function () { return ["FONT"].indexOf($(this).prop("nodeName")) >= 0; }).text().replace(/\n{2,}/g, '\n')
-        if(html)
+        if (html) return html;
         var jsonError = error.responseJSON ? JSON.stringify(error.responseJSON, null, 2) : null;
         if (jsonError) return jsonError;
         function _parseJson(text) {
