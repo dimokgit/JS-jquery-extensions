@@ -799,10 +799,13 @@
               }
               var response = $.D.propDeep(error, "response");
               if (!response) {
-                var isXHR = error.hasOwnProperty("readyState") && error.hasOwnProperty("status") && error.hasOwnProperty("statusText") && error.hasOwnProperty("responseText");
-                var errorNew = JSON.stringify({ url: error.url, statusText: error.statusText, responseText: error.responseText }, null, 2);
-                return errorNew;
+                if (error.hasOwnProperty("readyState") && error.hasOwnProperty("status") && error.hasOwnProperty("statusText") && error.hasOwnProperty("responseText")) {
+                  var errorNew = JSON.stringify({ url: error.url, statusText: error.statusText, responseText: error.responseText }, null, 2);
+                  return errorNew;
+                }
               }
+              if (error.message)
+                return error.message;
               var body = response.body || $.D.propDeep(error, "message") || $.D.propDeep(error, "body");
               var isHtml = body.indexOf("<html") >= 0;
               if (isHtml)
