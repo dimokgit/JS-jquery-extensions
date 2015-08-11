@@ -719,7 +719,7 @@
         var html = $(eval("error.data[0].response.body")).filter(function () { return ["FONT"].indexOf($(this).prop("nodeName")) >= 0; }).text().replace(/\n{2,}/g, '\n')
         if (html) return html;
         var jsonError = error.responseJSON ? JSON.stringify(error.responseJSON, null, 2) : null;
-        if (jsonError) return jsonError;
+        if (jsonError) return jsonError.replace(/\\r\\n/g, "\n");
         function _parseJson(text) {
           if ((text + "").replace(/^\s+|\s+$/g, '').indexOf("{") == 0) try {
             return $.parseJSON(text);
@@ -748,7 +748,12 @@
           else error = error.data[0] || error.data;
         try {
           function _cleanException(text) {
-            return text.replace("\\r\\n", "\n").replace(/",\s"/g, '",\n').replace(/The transaction ended in the trigger. The batch has been aborted./g, "").replace(/An error occurred while processing this request.\n/g, "").replace(/An error occurred while executing the command definition. See the inner exception for details.\n/g, "");
+            return text
+              .replace(/\\r\\n/g, "\n")
+              .replace(/",\s"/g, '",\n')
+              .replace(/The transaction ended in the trigger. The batch has been aborted./g, "")
+              .replace(/An error occurred while processing this request.\n/g, "")
+              .replace(/An error occurred while executing the command definition. See the inner exception for details.\n/g, "");
           }
           if ($.isArray(error.xhr)) {// ValidationError
             try {
@@ -761,6 +766,7 @@
             }
           }
           var message = [$.D.propDeep(error, "requestUri")];
+          message.push($.D.propDeep(error, "statusText"));
           function _pumpMessages(err) {
             message.push(err.message.value);
             var innererror = err.innererror;
@@ -790,7 +796,13 @@
                   var type = $.Linq.last((((innerError || {}).innererror || {}).type || "").split("."));
                   if (type && $.D.serverExceptions.isRegistered(type))
                     return _cleanException(innerError.innererror.message);
-                  _pumpMessages(innerError);
+                  if (innerError)
+                    if (typeof (innerError) === 'string')
+                      message.push(innerError);
+                    else
+                      _pumpMessages(innerError);
+                  else
+                    message.push(JSON.stringify(body, null, 2));
                   return _cleanException(message.join("\n"));
                 }
               } catch (e) {
