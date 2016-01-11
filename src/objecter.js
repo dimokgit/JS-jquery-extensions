@@ -1,4 +1,4 @@
-﻿define(["ko", "jquery", "underscore"], function (ko, $, _) {
+﻿define(["ko", "jquery"], function (ko, $) {
   return {
     sure: sure,
     name: sure_name,
@@ -51,20 +51,19 @@
   function makeError(o, p) {
     return "Property [" + p + "] not found in " + (JSON.prune ? JSON.prune(o, 1, 10) : JSON.stringify(o));
   }
+  function result(v) { var r = []; r.push(v); return r; }
   function deepPath(currentMember, path) {
-    var members = path.split("."), result = [];
-
+    var members = path.split(".");
     for (var i = 0; i < members.length; i++) {
       // Here we need to take special care of possible method 
       // calls and arrays, but I am too lazy to write it down.
       if (currentMember.hasOwnProperty(members[i])) {
         currentMember = currentMember[members[i]];
       } else {
-        return result;
+        return [];
       }
     }
-    result.push(currentMember);
-    return result;
+    return result(currentMember);
   }
   function propDeep(o, p, level) {
     if (arguments.length == 2) level = 5;
@@ -72,12 +71,13 @@
       p = p.toLowerCase();
       for (var n in o)
         if (n.toLowerCase() == p)
-          return o[n];
+          return result(o[n]);
       for (var n in o) {
-        var ret = $.D.propDeep(o[n], p, level);
-        if (ret !== undefined) return ret;
+        var ret = propDeep(o[n], p, level);
+        if (ret !== undefined) return result(ret);
       }
     }
+    return [];
   }
   /// #endregion
 });
